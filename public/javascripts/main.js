@@ -3,6 +3,20 @@ $(document).ready(function() {
     const urlData2 = "/javascripts/data/data2.json";
     const urlData3 = "/javascripts/data/data3.json";
 
+    const clickEvent = {
+        previousElm: {},
+        'SPAN': function(eTarget) {
+            eTarget.classList.toggle('selected')
+        },
+        'TH': function(eTarget) {
+            this.previousElm.className = "";
+            eTarget.parentElement.classList.add('selected');
+            this.previousElm = eTarget.parentElement.classList;
+            console.log(this.previousElm);
+            console.log(this.previousElm);
+        }
+    }
+
     const startTime = new Date().getTime();
     $.when($.getJSON(urlData1), $.getJSON(urlData2), $.getJSON(urlData3)).done(function(data1, data2, data3) {
         for (let i = 0, length = data1[0].length; i < length; i++) {
@@ -22,13 +36,14 @@ $(document).ready(function() {
             $('#tbody').append(table);
         }
     }).done(function() {
+        $(document).on('click', '#tbody>tr', function(e) {
+            const eTarget = e.target;
+            clickEvent[eTarget.tagName](eTarget);
+            if (eTarget.tagName == 'TH') {
+                clickEvent.previousElm = this;
+            }
+        })
         const requestTime = new Date().getTime() - startTime;
-        $('#usuage').html(requestTime)
+        $('#usuage').html(requestTime);
     });
-
-    $(document).on('click', 'tbody>tr', function(event) {
-        $(this).addClass('selected')
-        console.log(this)
-    })
-
 });
