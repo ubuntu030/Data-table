@@ -1,8 +1,64 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.main-container {
+    display: -webkit-flex;
+    display: flex;
+    width: 100%;
+}
+
+
+/* 左側CSS */
+
+.initial {
+    -webkit-flex: initial;
+    flex: initial;
+    display: flex;
+    width: 500px;
+    min-width: 250px;
+}
+
+.center {
+    justify-content: center;
+}
+
+
+/* 右側CSS */
+
+.flex-container {
+    display: -webkit-flex;
+    display: flex;
+    width: 90%;
+    margin: 10px;
+}
+
+.demo-box {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex: 1;
+    flex: 1;
+    flex-direction:column;
+    border: 1px solid red;
+    margin: 5px;
+}
+
+.demo-box > div {
+  justify-content: center;
+}
+
+.demo-box>a {
+    right: 0;
+    bottom: 0;
+    padding: 3px 0 0 3px;
+    color: #00B7FF;
+}
+
+li {
+    font-size: 120%;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
 }
