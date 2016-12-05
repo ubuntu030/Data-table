@@ -1,64 +1,74 @@
 body {
-    padding: 50px;
+    padding: 40px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-.main-container {
-    display: -webkit-flex;
-    display: flex;
-    width: 100%;
-}
-
-
-/* 左側CSS */
-
-.initial {
-    -webkit-flex: initial;
-    flex: initial;
-    display: flex;
-    width: 500px;
-    min-width: 250px;
-}
-
-.center {
-    justify-content: center;
-}
-
-
-/* 右側CSS */
-
-.flex-container {
-    display: -webkit-flex;
-    display: flex;
-    width: 90%;
-    margin: 10px;
-}
-
-.demo-box {
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex: 1;
-    flex: 1;
-    flex-direction:column;
-    border: 1px solid red;
-    margin: 5px;
-}
-
-.demo-box > div {
-  justify-content: center;
-}
-
-.demo-box>a {
-    right: 0;
-    bottom: 0;
-    padding: 3px 0 0 3px;
-    color: #00B7FF;
-}
-
-li {
-    font-size: 120%;
 }
 
 a {
     color: #00B7FF;
+}
+
+.container {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    width: 100%;
+    height: auto;
+}
+
+.flex-column {
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+.flex1 {
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+.flex2 {
+    -webkit-flex: 2;
+    flex: 2;
+}
+
+.box-container {
+    /*display: -webkit-flex;*/
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: auto;
+}
+
+.box-container>div {
+    width: 250px;
+    height: 250px;
+    margin: 0px 0px 5px 5px;
+    border: solid #6AC5AC 3px;
+}
+
+.box-container>div>h2 {
+    /* 需要設置positionh才能使用位置相關參數*/
+    position: relative;
+    top: 175px;
+}
+
+.center {
+    text-align: center;
+}
+
+.elem {
+    border: solid #6AC5AC 3px;
+    position: relative;
+}
+
+.elem-red {
+    border: solid #D64078 3px;
+}
+
+.elem-green {
+    border: solid #FDC72F 3px;
+}
+
+.ipsum {
+    color: #734161;
+    background-color: #eee;
 }
