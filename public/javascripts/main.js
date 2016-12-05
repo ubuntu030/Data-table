@@ -1,49 +1,70 @@
-$(document).ready(function() {
-    const urlData1 = "/javascripts/data/data1.json";
-    const urlData2 = "/javascripts/data/data2.json";
-    const urlData3 = "/javascripts/data/data3.json";
+$(document).ready(function(){
+	var urlData1 = "/javascripts/data/data1.json";
+	var urlData2 = "/javascripts/data/data2.json";
+	var urlData3 = "/javascripts/data/data3.json";
+	// 查得資料
+	var promiseData1 = $.ajax({url: urlData1, cache: false});
+	var promiseData2 = $.ajax({url: urlData2, cache: false});
+	var promiseData3 = $.ajax({url: urlData3, cache: false});
+	// 建立列
+	var getRowHtml = function(obj, data2map, data3map){
+		return '<tr>' +
+			'<td><span class="star"></span>' + obj.key + '</td>' +
+			'<td>' + obj.cell1 + '</td>' +
+			'<td>' + obj.cell2 + '</td>' +
+			'<td>' + obj.cell3 + '</td>' +
+			'<td>' + obj.cell4 + '</td>' +
+			'<td>' + obj.cell5 + '</td>' +
+			'<td>' + obj.cell6 + '</td>' +
+			'<td>' + obj.cell7 + '</td>' +
+			'<td>' + data2map[obj.key] + '</td>' +
+			'<td>' + data3map[obj.cell4] + '</td>' +
+			'</tr>';
+	};
 
-    const clickEvent = {
-        previousElm: {},
-        'SPAN': function(eTarget) {
-            eTarget.classList.toggle('selected')
-        },
-        'TH': function(eTarget) {
-            this.previousElm.className = "";
-            eTarget.parentElement.classList.add('selected');
-            this.previousElm = eTarget.parentElement.classList;
-            console.log(this.previousElm);
-            console.log(this.previousElm);
-        }
-    }
-
-    const startTime = new Date().getTime();
-    $.when($.getJSON(urlData1), $.getJSON(urlData2), $.getJSON(urlData3)).done(function(data1, data2, data3) {
-        for (let i = 0, length = data1[0].length; i < length; i++) {
-            const data3Values = Object.values(data3[0]);
-            const table = `<tr>
-												<th><span class="star"></span>${data1[0][i].key}</th>
-												<th>${data1[0][i].cell1}</th>
-												<th>${data1[0][i].cell2}</th>
-												<th>${data1[0][i].cell3}</th>
-												<th>${data3Values[i].cell4}</th>
-												<th>${data1[0][i].cell5}</th>
-												<th>${data1[0][i].cell6}</th>
-												<th>${data1[0][i].cell7}</th>
-												<th>${data2[0][i].cell8}</th>
-												<th>${data3Values[i].cell9}</th>
-											</tr>`;
-            $('#tbody').append(table);
-        }
-    }).done(function() {
-        $(document).on('click', '#tbody>tr', function(e) {
-            const eTarget = e.target;
-            clickEvent[eTarget.tagName](eTarget);
-            if (eTarget.tagName == 'TH') {
-                clickEvent.previousElm = this;
-            }
-        })
-        const requestTime = new Date().getTime() - startTime;
-        $('#usuage').html(requestTime);
-    });
+	var t0 = new Date();
+	// 資料全部取得
+	$.when(promiseData1, promiseData2, promiseData3).done(function(a1, a2, a3){
+		// var t0 = new Date();
+		var i, len, key;
+		var data1 = a1[0];
+		var data2 = a2[0];
+		var data3 = a3[0];
+		console.log(a3[0]);
+		// 整理至 data2map
+		var data2map = {};
+		len = data2.length;
+		for (i=0; i<len; i++) {
+			var data = data2[i];
+			data2map[data.key] = data.cell8;
+		}
+		// 整理至 data3map
+		var data3map = {};
+		for (key in data3) {
+			data3map[data3[key].cell4] = data3[key].cell9;
+		}
+		// 建立表格
+		var table = $('table');
+		len = data1.length;
+		var tbodyHtml = "";
+		for (i=0; i<len; i++) {
+			key = data1[i].key;
+			tbodyHtml += getRowHtml(data1[i], data2map, data3map);
+		}
+		$('<tbody>' + tbodyHtml + '</tbody>').appendTo(table);
+		// 點選列變色
+		table.on('click', 'tbody tr', function(){
+			var tr = $(this).addClass('selected');
+			if (window.lastSelectedTr)
+				window.lastSelectedTr.removeClass('selected');
+			window.lastSelectedTr = tr;
+		});
+		// 點擊星星效果
+		table.on('click', 'tbody .star', function(ev){
+			$(this).toggleClass('selected');
+			ev.stopPropagation();
+		});
+		// 使用時間
+		$('.usuage').text(new Date() - t0);
+	});
 });
