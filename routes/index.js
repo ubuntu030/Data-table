@@ -6,6 +6,13 @@ router.get('/', function(req, res, next) {
     res.render('index', {title: 'Express'});
 });
 
+router.get('/demo', function(req, res) {
+  res.render('demo', {
+    title: 'Use jQuery',
+    descript: 'This instance is from another'
+  })
+})
+
 router.get('/v1', function(req, res) {
     res.render('demoV1', {
         title: 'Use jQuery',
