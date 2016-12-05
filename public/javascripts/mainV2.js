@@ -3,6 +3,10 @@ $(document).ready(function() {
     const urlData2 = "/javascripts/data/data2.json";
     const urlData3 = "/javascripts/data/data3.json";
 
+    const getJSON1 = $.getJSON(urlData1);
+    const getJSON2 = $.getJSON(urlData2);
+    const getJSON3 = $.getJSON(urlData3);
+
     const clickEvent = {
         previousElm: {},
         'SPAN': function(eTarget) {
@@ -17,13 +21,6 @@ $(document).ready(function() {
 
     const arrayTerminator = function(arr) {
         var template = ``;
-        // 陣列切割
-        const workHard = (arr) => {
-            arr.map(() => {
-                const piecesOfArr = arr.splice(0, 1000);
-                domProcess(piecesOfArr)
-            })
-        }
         // dom處理
         const domProcess = (piecesOfArr) => {
             piecesOfArr.map((obj) => {
@@ -47,7 +44,8 @@ $(document).ready(function() {
         const TakeAway = (template) => {
             $('#tbody').append(template);
         }
-        workHard(arr);
+        // workHard(arr);
+        domProcess(arr);
     }
 
     function checkObj(mainArr, targetKey) {
@@ -73,10 +71,13 @@ $(document).ready(function() {
     }
 
     var startTime = new Date().getTime();
-    $.when($.getJSON(urlData1), $.getJSON(urlData2), $.getJSON(urlData3)).done((data1, data2, data3) => {
+    $.when(getJSON1, getJSON2, getJSON3).done((data1, data2, data3) => {
         const newArr = [];
+        const data1Arr = data1[0];
+        const data2Arr = data2[0];
         const data3Arr = doorudo(data3[0]);
-        data1[0].map((data1Obj, i) => {
+
+        data1Arr.map((data1Obj, i) => {
             const data1Key = data1Obj.key;
             const data1Cell4 = data1Obj.cell4;
             $.when(data1Obj, checkObj(data2[0], data1Key), checkObj1(data3Arr, data1Cell4)).done((data1, data2, data3) => {
