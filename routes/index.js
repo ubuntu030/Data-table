@@ -16,15 +16,23 @@ router.get('/demo', function(req, res) {
 router.get('/v1', function(req, res) {
     res.render('demoV1', {
         title: 'Use jQuery',
-        descript: 'This is my first example'
+        descript: '這是第一次實作的例子，並未對cell8、cell9做正確排列。'
     })
 })
 
 router.get('/v2', function(req, res) {
     res.render('demoV2', {
         title: 'Use jQuery',
-        descript: 'Optimizing Javascript code'
+        descript: '第二次實作，對cell9處理並不完美，每迭代一次data1都將會繁瑣搜尋data3。'
     })
 })
+
+router.get('/v3', function(req, res) {
+  res.render('demoV3', {
+    title: 'Javascript',
+    descript: '使用Javascript並改善v2頻繁遍歷問題'
+  })
+})
+
 
 module.exports = router;
