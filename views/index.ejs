@@ -23,18 +23,63 @@
         <section class="box-container elem-green flex2">
             <div>
                 <a href="demo">demo</a>
-                <h2 class="center buttom">平均時間:<span></span>ms</h2>
+                <h2 class="center buttom">平均時間:<span id="demo"></span>ms</h2>
             </div>
             <div>
                 <a href="v1">demoV1</a>
-                <h2 class="center">平均時間:<span></span>ms</h2>
+                <h2 class="center">平均時間:<span id="demoV1"></span>ms</h2>
             </div>
             <div>
                 <a href="v2">demoV2</a>
-                <h2 class="center">平均時間:<span></span>ms</h2>
+                <h2 class="center">平均時間:<span id="demoV2"></span>ms</h2>
+            </div>
+            <div>
+                <a href="v3">demoV3</a>
+                <h2 class="center">平均時間:<span id="demoV3"></span>ms</h2>
             </div>
         </section>
     </div>
+
+    <script>
+        if (typeof(Storage) !== "undefined") {
+            // sessionStorage.clear();
+            //檢查陣列是否存在並返回布林值與陣列
+            const checkArr = {
+                checkme: (naming) => {
+                    const getItem = sessionStorage.getItem(naming)
+                    const parseToArray = JSON.parse(getItem)
+                    const itemArrCheck = Array.isArray(parseToArray)
+                    if (itemArrCheck) {
+                        return {
+                            itemArrCheck,
+                            parseToArray
+                        }
+                    } else {
+                        return false
+                    }
+                }
+            }
+
+            function setAvgTime(naming, innerTarget) {
+                const cArr = checkArr.checkme(naming);
+                if (cArr.itemArrCheck && cArr.parseToArray.length != 0) {
+                    let values = cArr.parseToArray;
+                    let count = values.length;
+                    values = values.reduce((previous, current) => current += previous);
+                    values /= count;
+                    document.getElementById(innerTarget).innerHTML = values.toFixed(1);
+                    console.log(values);
+                } else {
+                    sessionStorage.setItem(naming, '[]')
+                }
+            }
+            setAvgTime('main', 'demo');
+            setAvgTime('mainV1', 'demoV1');
+            setAvgTime('mainV2', 'demoV2');
+        } else {
+            console.log('Sorry! No Web Storage support..');
+        }
+    </script>
 </body>
 
 </html>
