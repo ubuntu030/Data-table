@@ -30,7 +30,6 @@ $(document).ready(function(){
 		var data1 = a1[0];
 		var data2 = a2[0];
 		var data3 = a3[0];
-		console.log(a3[0]);
 		// 整理至 data2map
 		var data2map = {};
 		len = data2.length;
@@ -43,6 +42,7 @@ $(document).ready(function(){
 		for (key in data3) {
 			data3map[data3[key].cell4] = data3[key].cell9;
 		}
+		console.log(data3map);
 		// 建立表格
 		var table = $('table');
 		len = data1.length;
@@ -65,6 +65,14 @@ $(document).ready(function(){
 			ev.stopPropagation();
 		});
 		// 使用時間
-		$('.usuage').text(new Date() - t0);
+		const useTimed = new Date() - t0;
+		$('.usuage').text(useTimed);
+
+		//時間儲存
+		const timeArrJSON = sessionStorage.getItem('main');
+		const timeArr = JSON.parse(timeArrJSON);
+		timeArr.push(useTimed);
+		sessionStorage.setItem('main', JSON.stringify(timeArr))
+
 	});
 });

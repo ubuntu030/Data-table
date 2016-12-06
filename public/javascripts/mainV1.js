@@ -83,5 +83,12 @@ $.when($.getJSON(urlData1), $.getJSON(urlData2), $.getJSON(urlData3)).done(funct
     })
     const requestTime = new Date().getTime() - startTime;
     $('#usuage').html(requestTime);
+
+    //時間儲存
+		const timeArrJSON = sessionStorage.getItem('mainV1');
+		const timeArr = JSON.parse(timeArrJSON);
+		timeArr.push(requestTime);
+		sessionStorage.setItem('mainV1', JSON.stringify(timeArr))
+
 });
 });

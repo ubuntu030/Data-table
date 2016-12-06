@@ -91,7 +91,6 @@ $(document).ready(function() {
     }).done((newArr) => {
         // Render table view
         arrayTerminator(newArr[0]);
-        //
         $(document).on('click', '#tbody>tr', function(e) {
             const eTarget = e.target;
             clickEvent[eTarget.tagName](eTarget);
@@ -101,6 +100,13 @@ $(document).ready(function() {
         });
         var requestTime = new Date().getTime() - startTime;
         $('#usuage').html(requestTime);
+
+        //時間儲存
+    		const timeArrJSON = sessionStorage.getItem('mainV2');
+    		const timeArr = JSON.parse(timeArrJSON);
+    		timeArr.push(requestTime);
+    		sessionStorage.setItem('mainV2', JSON.stringify(timeArr))
+
     });
 
 });
