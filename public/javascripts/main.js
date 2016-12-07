@@ -22,10 +22,9 @@ $(document).ready(function(){
 			'</tr>';
 	};
 
-	var t0 = new Date();
 	// 資料全部取得
 	$.when(promiseData1, promiseData2, promiseData3).done(function(a1, a2, a3){
-		// var t0 = new Date();
+		var t0 = new Date();
 		var i, len, key;
 		var data1 = a1[0];
 		var data2 = a2[0];
@@ -42,7 +41,6 @@ $(document).ready(function(){
 		for (key in data3) {
 			data3map[data3[key].cell4] = data3[key].cell9;
 		}
-		console.log(data3map);
 		// 建立表格
 		var table = $('table');
 		len = data1.length;
